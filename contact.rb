@@ -1,5 +1,5 @@
 require 'csv'
-
+require 'colorize'
 # Represents a person in an address book.
 # The ContactList class will work with Contact objects instead of interacting with the CSV file directly
 class Contact
@@ -38,7 +38,7 @@ class Contact
       CSV.open('contacts.csv', 'a') do |csv_file|
         csv_file << [name, email]
       end
-      puts "Contact created successfully"
+      puts "Contact created successfully".green
       Contact.new(name, email)
     end
     

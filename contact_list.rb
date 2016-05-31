@@ -15,6 +15,7 @@ class ContactList
         self.send("do_#{@argv[0]}")
       rescue NoMethodError
         puts "That is not a valid command."
+        puts menu
       end
     end
   end
@@ -28,10 +29,17 @@ class ContactList
 
   def do_new
     puts "Enter the name: "
-    namer = STDIN.gets.chomp
+    name = STDIN.gets.chomp
     puts "Enter the email: "
     email = STDIN.gets.chomp
-    Contact.create(namer, email)
+    email_exists = Contact.all.detect do |contact|
+      contact.email == email
+    end
+    if email_exists
+      puts "That email adress already exists. "
+    else
+      Contact.create(name, email)
+    end
   end
 
   def do_show
@@ -47,8 +55,7 @@ class ContactList
     arr_of_contacts.each do |contact|
       puts "#{contact.id}: #{contact.name} (#{contact.email})"
     end
-    puts "------------------
-#{arr_of_contacts.size} record(s) total"
+    puts "------------------\n#{arr_of_contacts.size} record(s) total"
   end
 
   def menu
