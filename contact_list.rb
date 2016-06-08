@@ -93,7 +93,7 @@ class ContactList
   end
 
   def do_search(term)
-    arr_of_contacts = Contact.search(term)
+    arr_of_contacts = Contact.all.where("name ILIKE ? OR email LIKE ?", "%#{term}%", "%#{term}%" )
     arr_of_contacts.each do |contact|
       puts "#{contact.id}: #{contact.name} (#{contact.email})"
     end
